@@ -11,3 +11,22 @@ resource "aws_vpc" "main" {
   )
   }
   
+  resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id #association with vpc
+
+  tags = merge (
+    local.common_tags,
+    {
+        name = "${var.project}-${var.environment}"
+    }
+  )
+}
+
+resource "aws_subnet" "public" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = 
+
+  tags = {
+    Name = "Main"
+  }
+}
